@@ -1,2 +1,2 @@
-# -caduceus
+# caduceus
 The staff of hermes

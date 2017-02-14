@@ -2,6 +2,7 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
+#include <ArduinoJson.h>
  
 const char* ssid = "TNCAPEB0463";
 const char* password = "E5FA2085CF";
@@ -38,6 +39,7 @@ void setup(void){
   pinMode(led, OUTPUT);
   digitalWrite(led, 0);
   Serial.begin(115200);
+
   WiFi.begin(ssid, password);
   Serial.println("");
 
@@ -70,4 +72,13 @@ void setup(void){
  
 void loop(void){
   server.handleClient();
+
+  if (Serial.available() > 0){
+    String data = Serial.readStringUntil('\n');
+
+    StaticJsonBuffer<256> jsonBuffer;
+    JsonObject& root = jsonBuffer.parseObject(data);
+    const char* test = root["test"];
+    Serial.println(test);
+  }
 } 
